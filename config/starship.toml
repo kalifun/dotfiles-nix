@@ -1,0 +1,39 @@
+# ~/.config/starship.toml
+
+format = "$os$directory$git$node$rust$python$golang$line_break$character"
+right_format = "$cmd_duration"
+
+[os]
+disabled = false
+style = "bold white"
+
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[➜](bold red)"
+
+[directory]
+style = "bold blue"
+truncation_length = 3
+truncate_to_repo = true
+
+[git]
+style = "bold yellow"
+
+[nodejs]
+symbol = " "
+style = "bold green"
+
+[rust]
+symbol = " "
+style = "bold red"
+
+[python]
+symbol = " "
+style = "bold yellow"
+
+[golang]
+symbol = " "
+style = "bold cyan"
+
+[cmd_duration]
+style = "bold dimmed white"

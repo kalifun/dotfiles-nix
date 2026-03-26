@@ -1,16 +1,18 @@
-{pkgs, ...}: {
+{config, pkgs, ...}: {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
+
+    # Oh My Zsh
+    oh-my-zsh = {
+      enable = true;
+      plugins = ["git"];
+    };
+
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
-    shellAliases = {
-      ll = "eza -lah";
-      vim = "nvim";
-      cat = "bat";
-    };
-    initContent = ''
-      eval "$(${pkgs.zoxide}/bin/zoxide init zsh)"
-    '';
+
+    # User config loaded from ~/.zshrc
+    initExtra = "source ~/.zshrc";
   };
 }

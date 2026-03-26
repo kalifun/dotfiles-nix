@@ -1,0 +1,77 @@
+# -------------------------- 基础外观配置 --------------------------
+# 指定兼容的 Catppuccin Frappe 暗色主题（Ghostty 原生支持格式，无报错）
+theme = "Catppuccin Frappe"
+# macOS 半透明背景，兼顾通透感与代码可读性，适配桌面风格
+background-opacity = 0.85
+# 窗口装饰：使用 auto 自适应（Ghostty 合法值，自动匹配 macOS 原生窗口样式）
+# 合法值仅：auto / client / server / none，auto 是 macOS 最佳适配选项
+window-decoration = auto
+
+# -------------------------- 字体配置 --------------------------
+# 首选字体：你的指定字体 Monaspace Radon（编程友好，视觉舒适）
+font-family = "Monaspace Radon"
+# 降级备选字体：macOS 原生 SF Mono，防止 Monaspace Radon 未安装导致显示异常
+font-family = "SF Mono"
+# 字体大小：适配 Retina 屏幕，可根据屏幕分辨率微调为 13/15
+font-size = 14
+# 启用连字+上下文替代功能，优化编程场景下的字符显示效果
+font-feature = "calt,liga"
+# 光标颜色：精准匹配 Catppuccin Frappe 主题，醒目不刺眼，方便定位
+cursor-color = #f2d5cf
+
+# -------------------------- 窗口与工作目录 --------------------------
+# 窗口宽度（按字符数计算）：略加宽，适配 macOS 窗口布局，显示更多内容
+window-width = 88
+# 窗口高度（按行数计算）：略加高，兼顾内容显示与窗口紧凑性
+window-height = 26
+# 启动时默认打开用户主目录，方便快速访问个人文件与项目
+working-directory = home
+
+# -------------------------- 剪贴板与鼠标 --------------------------
+# 允许 Ghostty 读取系统剪贴板，实现跨应用文本传输
+clipboard-read = allow
+# 允许 Ghostty 写入系统剪贴板，支持复制终端内容到其他应用
+clipboard-write = allow
+# 选中文本即自动复制到剪贴板，与 macOS 原生文本操作逻辑一致
+copy-on-select = clipboard
+# 自动裁剪复制内容末尾的多余空格，保持文本整洁，避免无效字符
+clipboard-trim-trailing-spaces = true
+# 输入时自动隐藏鼠标指针，减少视觉干扰，专注终端操作
+mouse-hide-while-typing = true
+
+# -------------------------- 核心快捷键（Ghostty 合法格式+macOS 习惯） --------------------------
+# 注：macOS 中 Super 键即为 Cmd 键，以下为 Ghostty 官方支持的 keybind 配置格式
+# 每个快捷键单独配置，不使用大括号嵌套（解决 keybind 配置报错问题）
+# Key bindings
+keybind                        = ctrl+h=goto_split:left
+keybind                        = ctrl+j=goto_split:bottom
+keybind                        = ctrl+k=goto_split:top
+keybind                        = ctrl+l=goto_split:right
+keybind                        = ctrl+shift+h=new_split:left
+keybind                        = ctrl+shift+j=new_split:down
+keybind                        = ctrl+shift+k=new_split:up
+keybind                        = ctrl+shift+l=new_split:right
+keybind                        = super+shift+enter=new_split:auto
+keybind 		       = ctrl+shift+w=close_surface
+keybind                        = super+shift+i=inspector:toggle
+keybind                        = super+shift+r=reload_config
+keybind                        = super+t=new_tab
+
+
+# -------------------------- 额外 macOS 专属优化 --------------------------
+# 滚动历史行数：增加到 1.5 万行，方便回溯早期终端输出内容
+# 透明混合效果：采用线性校正，让半透明背景更自然，无偏色
+alpha-blending = linear-corrected
+
+# 美化
+# Look and Feel
+adjust-cursor-thickness        = 3
+adjust-underline-position      = 3
+bold-is-bright                 = true
+cursor-invert-fg-bg            = true
+cursor-opacity                 = 0.8
+cursor-style                   = bar
+link-url                       = true
+mouse-hide-while-typing        = true
+window-vsync                   = true
+background-blur                = true

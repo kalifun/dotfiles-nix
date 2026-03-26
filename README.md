@@ -11,6 +11,14 @@ macOS flake layout using:
 ```text
 .
 |-- flake.nix
+|-- config/                  # Dotfile configs (symlinked)
+|   |-- ghostty/
+|   |-- karabiner/
+|   |-- nvim/
+|   |-- rime/
+|   |-- starship.toml
+|   |-- tmux/
+|   `-- zsh/
 |-- hosts/
 |   |-- darwin-arm64-main/
 |   |   `-- default.nix
@@ -27,18 +35,61 @@ macOS flake layout using:
     |-- home-manager/
     |   |-- default.nix
     |   |-- git.nix
-    |   |-- neovim.nix
     |   |-- packages.nix
-    |   |-- tmux.nix
-    |   `-- zsh.nix
+    |   |-- zsh.nix
     `-- homebrew/
         `-- default.nix
 ```
+
+## Installed Software
+
+### CLI Tools (Nix)
+
+| Category | Tools |
+|----------|-------|
+| **Core** | bat eza fd fzf git neovim ripgrep tmux tree wget zoxide |
+| **Languages** | go rust rust-analyzer python3 nodejs |
+| **Dev Tools** | gh gitmux sesh starship yq |
+| **Shell** | oh-my-zsh zsh-autosuggestions zsh-syntax-highlighting |
+
+### GUI Apps (Homebrew Casks)
+
+| Category | Apps |
+|----------|------|
+| **Communication** | WeChat DingDing Telegram QQ |
+| **Input** | Squirrel (Rime) |
+| **Browser** | Arc Chrome |
+| **IDE** | Zed VSCode Neovim |
+| **AI** | CC-Switch |
+| **Note** | Obsidian Logseq |
+| **Terminal** | Ghostty iTerm2 |
+| **Player** | IINA |
+| **Productivity** | Raycast Karabiner Easydict OrbStack MonitorControl |
+| **Other** | Snipaste f.lux Beekeeper Studio Mos MQTTX |
+| **Fonts** | Fira Code Monaspace |
+
+### Homebrew Brews
+
+- `clash-party` - Proxy
+- `mole` - Deep clean and optimize Mac
+
+### Dotfile Configs
+
+| Config | Location |
+|--------|----------|
+| **Ghostty** | `~/.config/ghostty` |
+| **Karabiner** | `~/.config/karabiner` |
+| **Neovim** | `~/.config/nvim` |
+| **Rime** | `~/Library/Rime` (rime-ice + custom) |
+| **Starship** | `~/.config/starship.toml` |
+| **Tmux** | `~/.config/tmux` |
+| **Zsh** | `~/.zshrc` |
 
 ## Reuse model
 
 - Shared config lives in `modules/`
 - Shared user config lives in `home/<username>/`
+- Dotfile configs live in `config/` (symlinked)
 - Per-machine differences live in `hosts/<hostname>/`
 
 Most of your CLI tools, shell config, dotfiles, and env vars should stay shared.
@@ -53,26 +104,21 @@ These names are logical host roles, not hardware model names.
 
 ## What goes where
 
-- System CLI tools like `neovim`, `tmux`, `fzf`, `git`, `ripgrep`: `modules/darwin/`
-- GUI apps from Homebrew casks like Chrome, VSCode, iTerm2: `modules/homebrew/`
-- User shell config, aliases, dotfiles, git config, session env vars: `modules/home-manager/`
+- System CLI tools: `modules/darwin/packages.nix`
+- GUI apps from Homebrew: `modules/homebrew/default.nix`
+- User shell config: `modules/home-manager/zsh.nix`
+- Dotfile configs: `config/` (symlinked via `home/<username>/default.nix`)
 
 ## Apply
 
 Apple Silicon:
 
 ```bash
-nix --extra-experimental-features 'nix-command flakes' run github:LnL7/nix-darwin -- switch --flake .#darwin-arm64-main
+darwin-rebuild switch --flake .#darwin-arm64-main
 ```
 
 Intel:
 
 ```bash
-nix --extra-experimental-features 'nix-command flakes' run github:LnL7/nix-darwin -- switch --flake .#darwin-x86_64-legacy
+darwin-rebuild switch --flake .#darwin-x86_64-legacy
 ```
-
-## Next edits
-
-- Replace `programs.git.userEmail`
-- Add more `homebrew.casks`
-- Move machine-specific apps into the relevant `hosts/<hostname>/default.nix`
