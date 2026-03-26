@@ -1,5 +1,6 @@
 {
   username,
+  hostname,
   ...
 }: {
   nix.enable = false;
@@ -24,6 +25,12 @@
   programs.zsh.enable = true;
 
   security.pam.services.sudo_local.touchIdAuth = true;
+
+  system.activationScripts.postUserActivation.text = ''
+    /usr/sbin/scutil --set ComputerName "${hostname}"
+    /usr/sbin/scutil --set HostName "${hostname}"
+    /usr/sbin/scutil --set LocalHostName "${hostname}"
+  '';
 
   system.defaults = {
     dock.autohide = true;

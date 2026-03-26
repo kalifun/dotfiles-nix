@@ -8,8 +8,6 @@
     ../../modules/homebrew
   ];
 
-  networking.hostName = "darwin-arm64-main";
-
   users.users.${username} = {
     name = username;
     home = "/Users/${username}";

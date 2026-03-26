@@ -8,8 +8,6 @@
     ../../modules/homebrew
   ];
 
-  networking.hostName = "darwin-x86_64-legacy";
-
   users.users.${username} = {
     name = username;
     home = "/Users/${username}";
