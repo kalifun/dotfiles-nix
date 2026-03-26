@@ -21,6 +21,8 @@
     EDITOR = "nvim";
     VISUAL = "nvim";
     LANG = "en_US.UTF-8";
+    HOMEBREW_API_DOMAIN = "https://mirrors.ustc.edu.cn/homebrew-bottles/api";
+    HOMEBREW_BOTTLE_DOMAIN = "https://mirrors.ustc.edu.cn/homebrew-bottles";
   };
 
   programs.zsh.enable = true;

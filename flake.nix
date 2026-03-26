@@ -53,13 +53,14 @@
           {
             nix-homebrew = {
               enable = true;
-              enableRosetta = system == "aarch64-darwin";
+              autoMigrate = true;
+              enableRosetta = false;
               user = username;
               taps = {
                 "homebrew/homebrew-core" = homebrew-core;
                 "homebrew/homebrew-cask" = homebrew-cask;
               };
-              mutableTaps = false;
+              mutableTaps = true;
             };
           }
 

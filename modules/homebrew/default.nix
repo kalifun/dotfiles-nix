@@ -11,30 +11,25 @@
     taps = [
       "homebrew/cask"
       "homebrew/core"
-      "farion1231/ccswitch"
     ];
 
     brews = [
-      "clash-party"
       "mole"
     ];
 
     casks = [
       # Communication
       "wechat"
-      "dingding"
+      "dingtalk"
       "telegram"
       "qq"
 
       # Input
-      "squirrel"
+      "squirrel-app"
 
       # Browser
-      "arc-browser"
+      "arc"
       "google-chrome"
-
-      # AI
-      "cc-switch"
 
       # IDE
       "zed"
@@ -57,10 +52,11 @@
       "easydict"
       "orbstack"
       "monitorcontrol"
+      "clash-party"
 
       # Others
       "snipaste"
-      "f.lux"
+      "flux-app"
       "beekeeper-studio"
       "mos"
       "mqttx"
