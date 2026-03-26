@@ -1,4 +1,4 @@
-{config, pkgs, ...}: {
+{...}: {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -12,7 +12,7 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
-    # User config loaded from ~/.zshrc
-    initExtra = "source ~/.zshrc";
+    # Load user shell customizations after Home Manager's generated setup.
+    initContent = builtins.readFile ../../config/zsh/.zshrc;
   };
 }

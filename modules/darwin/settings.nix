@@ -4,6 +4,7 @@
   ...
 }: {
   nix.enable = false;
+  system.primaryUser = username;
 
   nix.settings = {
     experimental-features = [
@@ -26,17 +27,10 @@
 
   security.pam.services.sudo_local.touchIdAuth = true;
 
-  system.activationScripts.postUserActivation.text = ''
+  system.activationScripts.postActivation.text = ''
     /usr/sbin/scutil --set ComputerName "${hostname}"
     /usr/sbin/scutil --set HostName "${hostname}"
     /usr/sbin/scutil --set LocalHostName "${hostname}"
-
-    # Clone 雾凇拼音
-    RIME_DIR="$HOME/Library/Rime"
-    if [[ ! -d "$RIME_DIR" ]]; then
-      echo "Cloning rime-ice to $RIME_DIR..."
-      git clone https://github.com/iDvel/rime-ice "$RIME_DIR"
-    fi
   '';
 
   system.defaults = {

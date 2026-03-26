@@ -14,7 +14,7 @@
 
     # Languages
     go
-    rust
+    rustup
     rust-analyzer
     python3
     nodejs
