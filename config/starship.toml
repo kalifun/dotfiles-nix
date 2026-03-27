@@ -1,6 +1,6 @@
 # ~/.config/starship.toml
 
-format = "$os$directory$git$node$rust$python$golang$line_break$character"
+format = "$os$directory$git_branch$git_status$nodejs$rust$python$golang$line_break$character"
 right_format = "$cmd_duration"
 
 [os]
@@ -16,7 +16,10 @@ style = "bold blue"
 truncation_length = 3
 truncate_to_repo = true
 
-[git]
+[git_branch]
+style = "bold yellow"
+
+[git_status]
 style = "bold yellow"
 
 [nodejs]
