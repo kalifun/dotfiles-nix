@@ -45,45 +45,45 @@ macOS flake layout using:
 
 ### CLI Tools (Nix)
 
-| Category | Tools |
-|----------|-------|
-| **Core** | bat eza fd fzf git neovim ripgrep tmux tree wget zoxide |
-| **Languages** | go rust rust-analyzer python3 nodejs |
-| **Dev Tools** | gh gitmux sesh starship yq |
-| **Shell** | oh-my-zsh zsh-autosuggestions zsh-syntax-highlighting |
+| Category      | Tools                                                   |
+| ------------- | ------------------------------------------------------- |
+| **Core**      | bat eza fd fzf git neovim ripgrep tmux tree wget zoxide |
+| **Languages** | go rust rust-analyzer python3 nodejs                    |
+| **Dev Tools** | gh gitmux sesh starship yq                              |
+| **Shell**     | oh-my-zsh zsh-autosuggestions zsh-syntax-highlighting   |
 
 ### GUI Apps (Homebrew Casks)
 
-| Category | Apps |
-|----------|------|
-| **Communication** | WeChat DingDing Telegram QQ |
-| **Input** | Squirrel (Rime) |
-| **Browser** | Arc Chrome |
-| **IDE** | Zed VSCode Neovim |
-| **AI** | CC-Switch |
-| **Note** | Obsidian Logseq |
-| **Terminal** | Ghostty iTerm2 |
-| **Player** | IINA |
-| **Productivity** | Raycast Karabiner Easydict OrbStack MonitorControl |
-| **Other** | Snipaste f.lux Beekeeper Studio Mos MQTTX |
-| **Fonts** | Fira Code Monaspace |
+| Category          | Apps                                               |
+| ----------------- | -------------------------------------------------- |
+| **Communication** | WeChat DingTalk Telegram QQ                        |
+| **Input**         | Squirrel (Rime)                                    |
+| **Browser**       | Arc Chrome                                         |
+| **IDE**           | Zed VSCode Neovim                                  |
+| **AI**            | CC-Switch                                          |
+| **Note**          | Obsidian Logseq                                    |
+| **Terminal**      | Ghostty iTerm2                                     |
+| **Player**        | IINA                                               |
+| **Productivity**  | Raycast Karabiner Easydict OrbStack MonitorControl |
+| **Other**         | Snipaste f.lux Beekeeper Studio Mos MQTTX          |
+| **Fonts**         | Fira Code Monaspace                                |
+| **Proxy**         | clash-party                                        |
 
 ### Homebrew Brews
 
-- `clash-party` - Proxy
 - `mole` - Deep clean and optimize Mac
 
 ### Dotfile Configs
 
-| Config | Location |
-|--------|----------|
-| **Ghostty** | `~/.config/ghostty` |
-| **Karabiner** | `~/.config/karabiner` |
-| **Neovim** | `~/.config/nvim` |
-| **Rime** | `~/Library/Rime` (rime-ice + custom) |
-| **Starship** | `~/.config/starship.toml` |
-| **Tmux** | `~/.config/tmux` |
-| **Zsh** | `~/.zshrc` |
+| Config        | Location                             |
+| ------------- | ------------------------------------ |
+| **Ghostty**   | `~/.config/ghostty`                  |
+| **Karabiner** | `~/.config/karabiner`                |
+| **Neovim**    | `~/.config/nvim`                     |
+| **Rime**      | `~/Library/Rime` (rime-ice + custom) |
+| **Starship**  | `~/.config/starship.toml`            |
+| **Tmux**      | `~/.config/tmux`                     |
+| **Zsh**       | `~/.zshrc`                           |
 
 ## Reuse model
 
@@ -114,11 +114,11 @@ These names are logical host roles, not hardware model names.
 Apple Silicon:
 
 ```bash
-darwin-rebuild switch --flake .#darwin-arm64-main
+sudo darwin-rebuild switch --flake .#darwin-arm64-main
 ```
 
 Intel:
 
 ```bash
-darwin-rebuild switch --flake .#darwin-x86_64-legacy
+sudo darwin-rebuild switch --flake .#darwin-x86_64-legacy
 ```
