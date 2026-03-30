@@ -111,6 +111,17 @@ These names are logical host roles, not hardware model names.
 
 ## Apply
 
+This repo expects `nix-darwin` to manage Nix itself, including `nix-command` and `flakes`.
+On a brand new macOS machine, install Nix once as bootstrap, then immediately apply this flake.
+
+Bootstrap:
+
+```bash
+curl -L https://nixos.org/nix/install | sh
+```
+
+After the installer finishes, open a new shell and run:
+
 Apple Silicon:
 
 ```bash
