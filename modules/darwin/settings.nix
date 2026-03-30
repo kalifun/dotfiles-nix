@@ -29,12 +29,6 @@
 
   security.pam.services.sudo_local.touchIdAuth = true;
 
-  system.activationScripts.postActivation.text = ''
-    /usr/sbin/scutil --set ComputerName "${hostname}"
-    /usr/sbin/scutil --set HostName "${hostname}"
-    /usr/sbin/scutil --set LocalHostName "${hostname}"
-  '';
-
   system.defaults = {
     dock.autohide = true;
     dock.mru-spaces = false;

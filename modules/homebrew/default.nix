@@ -15,6 +15,7 @@
 
     brews = [
       "mole"
+      "docker"
     ];
 
     casks = [
@@ -23,6 +24,8 @@
       "dingtalk"
       "telegram"
       "qq"
+      "tencent-meeting"
+      "feishu"
 
       # Input
       "squirrel-app"
@@ -64,6 +67,10 @@
       # Fonts
       "font-fira-code"
       "font-monaspace"
+
+      # AI Tools
+      "codex"
+      "claude-code"
     ];
 
     masApps = {
