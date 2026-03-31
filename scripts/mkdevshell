@@ -1,36 +1,21 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SHELLS=(
-  "go-latest"
-  "go-1_25"
-  "go-1_24"
-  "nodejs-22"
-  "nodejs-20"
-  "python-313"
-  "python-311"
-  "rust-stable"
-  "rust-nightly"
-  "rust-nightly-wasm"
-  "lua"
-  "zig"
-  "zig-latest"
-  "thrift"
-  "nix"
-)
+FLAKE="github:acehinnnqru/devshells"
+SYSTEM=$(nix eval --impure --raw --expr 'builtins.currentSystem')
 
-# Templates use language family names (no version suffix)
-TEMPLATE_LANGS=(
-  "go"
-  "nodejs"
-  "python"
-  "rust"
-  "lua"
-  "zig"
-  "plain"
-)
+# Fetch available shells and templates dynamically
+FLAKE_JSON=$(nix flake show "$FLAKE" --json 2>/dev/null)
 
-mode=$(printf 'simple\ntemplate\n' | fzf --prompt="Mode: " --height=5 --border)
+SHELLS=$(echo "$FLAKE_JSON" | jq -r ".devShells.\"$SYSTEM\" | keys[] | select(. != \"default\")" 2>/dev/null)
+TEMPLATES=$(echo "$FLAKE_JSON" | jq -r '.templates | keys[]' 2>/dev/null)
+
+if [[ -z "$SHELLS" ]]; then
+  echo "Failed to fetch devShells from $FLAKE" >&2
+  exit 1
+fi
+
+mode=$(printf 'simple\ntemplate\n' | fzf --prompt="Mode: " --height=8 --border --header="simple: use remote devshell | template: init local flake.nix")
 
 if [[ -z "$mode" ]]; then
   echo "No selection made, exiting."
@@ -38,7 +23,7 @@ if [[ -z "$mode" ]]; then
 fi
 
 if [[ "$mode" == "simple" ]]; then
-  selected=$(printf '%s\n' "${SHELLS[@]}" | fzf --prompt="Select devshell: " --height=20 --border)
+  selected=$(echo "$SHELLS" | fzf --prompt="Select devshell: " --height=20 --border)
 
   if [[ -z "$selected" ]]; then
     echo "No selection made, exiting."
@@ -51,12 +36,12 @@ if [[ "$mode" == "simple" ]]; then
     [[ "$answer" =~ ^[Yy]$ ]] || exit 0
   fi
 
-  echo "use flake github:acehinnnqru/devshells#${selected}" > .envrc
+  echo "use flake ${FLAKE}#${selected}" > .envrc
   direnv allow
   echo "Created .envrc for ${selected}"
 
 else
-  selected=$(printf '%s\n' "${TEMPLATE_LANGS[@]}" | fzf --prompt="Select template: " --height=10 --border)
+  selected=$(echo "$TEMPLATES" | fzf --prompt="Select template: " --height=10 --border)
 
   if [[ -z "$selected" ]]; then
     echo "No selection made, exiting."
@@ -69,7 +54,7 @@ else
     [[ "$answer" =~ ^[Yy]$ ]] || exit 0
   fi
 
-  nix flake init -t "github:acehinnnqru/devshells#${selected}"
+  nix flake init -t "${FLAKE}#${selected}"
 
   if [[ -f .envrc ]]; then
     echo -n ".envrc already exists, overwrite? [y/N] "
