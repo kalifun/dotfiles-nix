@@ -4,6 +4,7 @@
     lazygit
   ] ++ [
     (pkgs.writeShellScriptBin "mkdevshell" (builtins.readFile ../../scripts/mkdevshell))
+    (pkgs.writeShellScriptBin "rebuild" (builtins.readFile ../../scripts/rebuild))
   ];
 
   programs.fzf = {

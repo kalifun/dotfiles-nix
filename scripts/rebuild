@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+UPDATE=false
+for arg in "$@"; do
+  [[ "$arg" == "--update" ]] && UPDATE=true
+done
+
+case $(uname -m) in
+  arm64)  TARGET="darwin-arm64-main" ;;
+  x86_64) TARGET="darwin-x86_64-legacy" ;;
+  *) echo "Unsupported architecture: $(uname -m)"; exit 1 ;;
+esac
+
+if $UPDATE; then
+  echo "Updating flake inputs..."
+  nix flake update
+fi
+
+echo "Building $TARGET..."
+sudo darwin-rebuild switch --flake .#"$TARGET"

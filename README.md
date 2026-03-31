@@ -12,7 +12,8 @@ macOS flake layout using:
 .
 |-- flake.nix
 |-- scripts/                 # Custom scripts installed into PATH
-|   `-- mkdevshell           # Interactive devshell generator
+|   |-- mkdevshell           # Interactive devshell generator
+|   `-- rebuild              # Build and switch system configuration
 |-- config/                  # Dotfile configs (symlinked)
 |   |-- ghostty/
 |   |-- karabiner/
@@ -151,4 +152,11 @@ Intel:
 
 ```bash
 sudo darwin-rebuild switch --flake .#darwin-x86_64-legacy
+```
+
+After the initial bootstrap, use the `rebuild` script from the dotfiles directory:
+
+```bash
+rebuild           # switch to current config
+rebuild --update  # update all flake inputs, then switch
 ```
