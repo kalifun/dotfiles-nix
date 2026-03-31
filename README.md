@@ -11,6 +11,8 @@ macOS flake layout using:
 ```text
 .
 |-- flake.nix
+|-- scripts/                 # Custom scripts installed into PATH
+|   `-- mkdevshell           # Interactive devshell generator
 |-- config/                  # Dotfile configs (symlinked)
 |   |-- ghostty/
 |   |-- karabiner/
@@ -108,6 +110,23 @@ These names are logical host roles, not hardware model names.
 - GUI apps from Homebrew: `modules/homebrew/default.nix`
 - User shell config: `modules/home-manager/zsh.nix`
 - Dotfile configs: `config/` (symlinked via `home/<username>/default.nix`)
+- Custom scripts: `scripts/` (installed into PATH via `modules/home-manager/packages.nix`)
+
+## Dev Shells
+
+Per-project dev environments are managed via [acehinnnqru/devshells](https://github.com/acehinnnqru/devshells) + `direnv`.
+
+Use the `mkdevshell` script to generate a `.envrc` interactively:
+
+```bash
+mkdevshell
+```
+
+Two modes:
+- **simple** — writes `use flake github:acehinnnqru/devshells#<shell>` to `.envrc`, activates immediately
+- **template** — runs `nix flake init` to generate a local `flake.nix` (customizable), then writes `use flake .` to `.envrc`
+
+Available shells: `go-latest`, `go-1_25`, `go-1_24`, `nodejs-22`, `nodejs-20`, `python-313`, `python-311`, `rust-stable`, `rust-nightly`, `rust-nightly-wasm`, `lua`, `zig`, `zig-latest`, `thrift`, `nix`
 
 ## Apply
 
