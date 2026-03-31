@@ -23,7 +23,9 @@ eval "$(zoxide init zsh)"
 # === Aliases ===
 alias ll='eza -lah'
 alias vim='nvim'
+alias v='nvim'
 alias cat='bat'
+alias s='sesh connect $(sesh list --icons | fzf --ansi --border-label " sesh " --prompt "⚡ " --header " ^a all ^t tmux ^z zoxide" --bind "ctrl-a:change-prompt(⚡ )+reload(sesh list --icons)" --bind "ctrl-t:change-prompt(🪟 )+reload(sesh list -t --icons)" --bind "ctrl-z:change-prompt(📁 )+reload(sesh list -z --icons)" --preview "sesh preview {}" --preview-window "right:55%")'
 
 # === Editor ===
 export EDITOR='nvim'
