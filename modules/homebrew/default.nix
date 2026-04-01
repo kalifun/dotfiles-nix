@@ -20,12 +20,7 @@
 
     casks = [
       # Communication
-      "wechat"
-      "dingtalk"
       "telegram"
-      "qq"
-      "tencent-meeting"
-      "feishu"
 
       # Input
       "squirrel-app"
@@ -55,7 +50,7 @@
       "easydict"
       "orbstack"
       "monitorcontrol"
-      "clash-party"
+      # "clash-party"
 
       # Others
       "snipaste"
