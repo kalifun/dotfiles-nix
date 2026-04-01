@@ -71,6 +71,9 @@
       # AI Tools
       "codex"
       "claude-code"
+
+      # screen recorder
+      "bettercapture"
     ];
 
     masApps = {

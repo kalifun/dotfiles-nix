@@ -3,7 +3,6 @@
     bat
     eza
     fd
-    fzf
     git
     neovim
     ripgrep

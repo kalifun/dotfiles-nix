@@ -3,7 +3,7 @@
   hostname,
   ...
 }: {
-  nix.enable = true;
+  nix.enable = false;
   system.primaryUser = username;
 
   nix.settings = {
