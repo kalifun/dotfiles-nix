@@ -3,6 +3,7 @@
   hostname,
   ...
 }: {
+  # Set to true when Nix is installed by the official installer, false when using Determinate Nix.
   nix.enable = false;
   system.primaryUser = username;
 

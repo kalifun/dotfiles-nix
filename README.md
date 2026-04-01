@@ -2,7 +2,7 @@
 
 macOS flake layout using:
 
-- `nix-darwin` for system-level Nix and macOS settings
+- `nix-darwin` for macOS system settings
 - `nix-homebrew` + `homebrew` module for Homebrew packages and casks
 - `home-manager` for user-level dotfiles and shell config
 
@@ -131,16 +131,34 @@ Available shells: `go-latest`, `go-1_25`, `go-1_24`, `nodejs-22`, `nodejs-20`, `
 
 ## Apply
 
-This repo expects `nix-darwin` to manage Nix itself, including `nix-command` and `flakes`.
-On a brand new macOS machine, install Nix once as bootstrap, then immediately apply this flake.
+Choose one bootstrap mode before the first apply.
 
-Bootstrap:
+### Option 1: Official Nix Installer
+
+Set `nix.enable = true` in [`modules/darwin/settings.nix`](./modules/darwin/settings.nix).
+In this mode, `nix-darwin` is allowed to manage the Nix installation.
+
+Install Nix with the official installer, then open a new shell:
 
 ```bash
 curl -L https://nixos.org/nix/install | sh
 ```
 
-After the installer finishes, open a new shell and run:
+First apply:
+
+Apple Silicon:
+
+```bash
+nix run github:LnL7/nix-darwin/master#darwin-rebuild -- switch --flake .#darwin-arm64-main
+```
+
+Intel:
+
+```bash
+nix run github:LnL7/nix-darwin/master#darwin-rebuild -- switch --flake .#darwin-x86_64-legacy
+```
+
+Later applies:
 
 Apple Silicon:
 
@@ -154,7 +172,44 @@ Intel:
 sudo darwin-rebuild switch --flake .#darwin-x86_64-legacy
 ```
 
-After the initial bootstrap, use the `rebuild` script from the dotfiles directory:
+### Option 2: Determinate Nix
+
+Keep `nix.enable = false` in [`modules/darwin/settings.nix`](./modules/darwin/settings.nix).
+In this mode, Nix is managed outside `nix-darwin`.
+
+Install [Determinate Nix](https://determinate.systems/nix-installer), then open a new shell.
+
+First apply:
+
+Apple Silicon:
+
+```bash
+nix run github:LnL7/nix-darwin/master#darwin-rebuild -- switch --flake .#darwin-arm64-main
+```
+
+Intel:
+
+```bash
+nix run github:LnL7/nix-darwin/master#darwin-rebuild -- switch --flake .#darwin-x86_64-legacy
+```
+
+Later applies:
+
+Apple Silicon:
+
+```bash
+sudo darwin-rebuild switch --flake .#darwin-arm64-main
+```
+
+Intel:
+
+```bash
+sudo darwin-rebuild switch --flake .#darwin-x86_64-legacy
+```
+
+In both modes, the first apply uses `nix run` because `darwin-rebuild` is usually not available until after the first successful switch.
+
+You can also use the `rebuild` script from the dotfiles directory:
 
 ```bash
 rebuild           # switch to current config
