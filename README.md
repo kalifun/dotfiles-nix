@@ -215,3 +215,32 @@ You can also use the `rebuild` script from the dotfiles directory:
 rebuild           # switch to current config
 rebuild --update  # update all flake inputs, then switch
 ```
+
+## Troubleshooting
+
+### systemPackages disappear after reboot
+
+On recent macOS versions, `System Settings > General > Login Items & Extensions > Allow in the Background`
+may show some Nix-related background items as plain `sh` entries.
+
+These are easy to mistake for something suspicious, but they are required for `nix-darwin` /
+Determinate Nix boot integration. On this setup they may include:
+
+- `org.nixos.activate-system`
+- `org.nixos.darwin-store`
+- `systems.determinate.nix-installer.nix-hook`
+
+If you disable those `sh` entries, the system profile may not be restored on the next boot.
+Typical symptoms:
+
+- `/run/current-system` is missing after reboot
+- commands from `environment.systemPackages` are no longer found
+- shell startup reports errors such as `command not found: starship` or `command not found: zoxide`
+
+If that happens, re-enable the related `sh` entries in `Allow in the Background` and reboot.
+If you need an immediate recovery without rebooting, run:
+
+```bash
+sudo launchctl bootstrap system /Library/LaunchDaemons/org.nixos.activate-system.plist
+sudo launchctl kickstart -k system/org.nixos.activate-system
+```
