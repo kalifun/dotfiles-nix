@@ -52,7 +52,7 @@ macOS flake layout using:
 | ------------- | ------------------------------------------------------- |
 | **Core**      | bat eza fd fzf git neovim ripgrep tmux tree wget zoxide |
 | **Languages** | go rust rust-analyzer python3 nodejs                    |
-| **Dev Tools** | gh gitmux sesh starship yq                              |
+| **Dev Tools** | gh gitmux sesh starship uv yq                           |
 | **Shell**     | oh-my-zsh zsh-autosuggestions zsh-syntax-highlighting   |
 
 ### GUI Apps (Homebrew Casks)

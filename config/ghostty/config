@@ -75,3 +75,4 @@ link-url                       = true
 mouse-hide-while-typing        = true
 window-vsync                   = true
 background-blur                = true
+macos-titlebar-style           = transparent

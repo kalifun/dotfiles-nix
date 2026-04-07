@@ -20,6 +20,7 @@
 
     # Dev tools
     gh
+    uv
     yq
     gitmux
     starship
