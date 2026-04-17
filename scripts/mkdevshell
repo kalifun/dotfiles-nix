@@ -7,8 +7,11 @@ SYSTEM=$(nix eval --impure --raw --expr 'builtins.currentSystem')
 # Fetch available shells and templates dynamically
 FLAKE_JSON=$(nix flake show "$FLAKE" --json 2>/dev/null)
 
-SHELLS=$(echo "$FLAKE_JSON" | jq -r ".devShells.\"$SYSTEM\" | keys[] | select(. != \"default\")" 2>/dev/null)
-TEMPLATES=$(echo "$FLAKE_JSON" | jq -r '.templates | keys[]' 2>/dev/null)
+# Nix 2.28+ flake show JSON nests outputs under .inventory; do not use echo here —
+# bash echo may expand "\n" inside JSON strings and break parsing.
+SHELLS=$(printf '%s' "$FLAKE_JSON" | jq -r ".inventory.devShells.output.children.\"$SYSTEM\".children | keys[] | select(. != \"default\")" 2>/dev/null)
+TEMPLATES=$(printf '%s' "$FLAKE_JSON" | jq -r '.inventory.templates.output.children | keys[]' 2>/dev/null)
+
 
 if [[ -z "$SHELLS" ]]; then
   echo "Failed to fetch devShells from $FLAKE" >&2
