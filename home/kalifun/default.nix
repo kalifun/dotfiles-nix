@@ -24,7 +24,10 @@
 
   xdg.configFile = {
     "starship.toml".source = ../../config/starship.toml;
-    "nvim".source = ../../config/nvim;
+    "nvim" = {
+      source = ../../config/nvim;
+      recursive = true;
+    };
     "karabiner".source = ../../config/karabiner;
     "tmux".source = ../../config/tmux;
     "ghostty".source = ../../config/ghostty;
