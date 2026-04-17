@@ -25,6 +25,7 @@
     gitmux
     starship
     sesh
+    tree-sitter
 
     # Zsh
     oh-my-zsh
