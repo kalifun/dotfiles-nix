@@ -17,9 +17,6 @@
       EDITOR = "nvim";
       TERMINAL = "iTerm.app";
     };
-
-    # Rime custom config (雾凇拼音用 git clone 直接装)
-    file."Library/Rime/squirrel.custom.yaml".source = ../../config/rime/squirrel.custom.yaml;
   };
 
   xdg.configFile = {
@@ -32,6 +29,7 @@
 
   home.activation.installRimeIce = lib.hm.dag.entryAfter ["writeBoundary"] ''
     RIME_DIR="$HOME/Library/Rime"
+    ${pkgs.coreutils}/bin/mkdir -p "$RIME_DIR"
 
     if [ ! -e "$RIME_DIR/default.yaml" ]; then
       TMP_DIR="$(mktemp -d)"
@@ -41,6 +39,9 @@
       ${pkgs.git}/bin/git clone --depth=1 https://github.com/iDvel/rime-ice "$TMP_DIR/rime-ice"
       cp -R "$TMP_DIR/rime-ice"/. "$RIME_DIR"/
     fi
+
+    # 放在雾凇安装之后，避免与 home.file 激活顺序竞态导致 ~/Library/Rime 里没有该文件
+    ${pkgs.coreutils}/bin/install -Dm644 ${../../config/rime/squirrel.custom.yaml} "$RIME_DIR/squirrel.custom.yaml"
   '';
 
   home.activation.installRustStable = lib.hm.dag.entryAfter ["writeBoundary"] ''
