@@ -68,6 +68,8 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            # 已有 ~/.config/nvim 等目录时，否则 checkLinkTargets 失败会中止整段 HM 激活（Rime 等也不会跑）
+            home-manager.backupFileExtension = "hm-backup";
             home-manager.extraSpecialArgs = {
               inherit inputs self username hostname system;
             };
