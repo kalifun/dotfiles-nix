@@ -4,6 +4,7 @@
     eza
     fd
     git
+    subversion
     neovim
     ripgrep
     tmux
@@ -17,6 +18,7 @@
     rust-analyzer
     python3
     nodejs
+    bun
 
     # Dev tools
     gh

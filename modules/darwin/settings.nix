@@ -14,6 +14,11 @@
     ];
     trusted-users = [ username ];
     auto-optimise-store = true;
+    # SJTUG 镜像优先，官方 cache 作后备（见 https://mirror.sjtu.edu.cn/docs/nix-channels/store ）
+    substituters = [
+      "https://mirror.sjtu.edu.cn/nix-channels/store"
+      "https://cache.nixos.org"
+    ];
   };
 
   nixpkgs.config.allowUnfree = true;
