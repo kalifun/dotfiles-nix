@@ -1,9 +1,9 @@
-{pkgs, ...}: {
+{pkgs, inputs, ...}: {
   home.packages = with pkgs; [
     jq
     lazygit
+    inputs.devshells.packages.${pkgs.system}.mkdevshell
   ] ++ [
-    (pkgs.writeShellScriptBin "mkdevshell" (builtins.readFile ../../scripts/mkdevshell))
     (pkgs.writeShellScriptBin "rebuild" (builtins.readFile ../../scripts/rebuild))
   ];
 

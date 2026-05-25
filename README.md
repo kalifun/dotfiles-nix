@@ -12,7 +12,6 @@ macOS flake layout using:
 .
 |-- flake.nix
 |-- scripts/                 # Custom scripts installed into PATH
-|   |-- mkdevshell           # Interactive devshell generator
 |   `-- rebuild              # Build and switch system configuration
 |-- config/                  # Dotfile configs (symlinked)
 |   |-- ghostty/
@@ -115,19 +114,20 @@ These names are logical host roles, not hardware model names.
 
 ## Dev Shells
 
-Per-project dev environments are managed via [acehinnnqru/devshells](https://github.com/acehinnnqru/devshells) + `direnv`.
+Per-project dev environments are managed via [kalifun/devshells](https://github.com/kalifun/devshells) + `direnv`.
 
-Use the `mkdevshell` script to generate a `.envrc` interactively:
+`mkdevshell` is installed globally as a system package. Use it to generate a `.envrc`:
 
 ```bash
-mkdevshell
+mkdevshell simple rust-stable
 ```
 
-Two modes:
-- **simple** — writes `use flake github:acehinnnqru/devshells#<shell>` to `.envrc`, activates immediately
-- **template** — runs `nix flake init` to generate a local `flake.nix` (customizable), then writes `use flake .` to `.envrc`
+**Modes:**
+- **simple `<name>`** — writes `use flake github:kalifun/devshells#<shell>` to `.envrc`, activates immediately
+- **composite** — interactive fzf multi-select to combine shells
+- **template [name]** — initialize a project with `nix flake init`
 
-Available shells: `go-latest`, `go-1_25`, `go-1_24`, `nodejs-22`, `nodejs-20`, `python-313`, `python-311`, `rust-stable`, `rust-nightly`, `rust-nightly-wasm`, `lua`, `zig`, `zig-latest`, `thrift`, `nix`
+Available shells: `go-latest`, `go-1_25`, `go-1_24`, `nodejs-22`, `nodejs-20`, `python-313`, `python-311`, `python-314`, `rust-stable`, `rust-nightly`, `rust-nightly-wasm`, `lua`, `zig`, `zig-latest`, `thrift`, `nix`, `java-android`
 
 ## Apply
 

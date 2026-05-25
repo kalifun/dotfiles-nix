@@ -25,6 +25,8 @@
       url = "github:Homebrew/homebrew-cask";
       flake = false;
     };
+
+    devshells.url = "github:kalifun/devshells";
   };
 
   outputs = inputs @ {
@@ -34,6 +36,7 @@
     nix-homebrew,
     homebrew-core,
     homebrew-cask,
+    devshells,
     ...
   }: let
     mkHost = {
