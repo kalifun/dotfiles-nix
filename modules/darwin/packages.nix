@@ -13,11 +13,11 @@
     zoxide
 
     # Languages
-    go
-    rustup
-    rust-analyzer
-    python3
-    nodejs
+    #go
+    #rustup
+    #rust-analyzer
+    #python3
+    #nodejs
     bun
 
     # Dev tools

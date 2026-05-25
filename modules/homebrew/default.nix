@@ -42,10 +42,10 @@
       "iterm2"
 
       # Player
-      "iina"
+      # "iina"
 
       # Productivity
-      "raycast"
+      # "raycast"  # Currently using the v2 beta version
       "karabiner-elements"
       "easydict"
       "orbstack"
@@ -65,7 +65,7 @@
 
       # AI Tools
       "codex"
-      "claude-code"
+      #"claude-code"
 
       # screen recorder
       "bettercapture"
