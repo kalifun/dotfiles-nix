@@ -27,6 +27,13 @@
     };
 
     devshells.url = "github:kalifun/devshells";
+
+    # nub 的第三方 tap，交给 nix-homebrew 声明式管理（否则 brew tap 会因 Taps 根目录归 root 而失败）
+    # 用 git+https 而非 github: 前缀，避免解析默认分支时触发 GitHub REST API 限流
+    nubjs-tap = {
+      url = "git+https://github.com/nubjs/homebrew-tap";
+      flake = false;
+    };
   };
 
   outputs = inputs @ {
@@ -36,6 +43,7 @@
     nix-homebrew,
     homebrew-core,
     homebrew-cask,
+    nubjs-tap,
     devshells,
     ...
   }: let
@@ -62,6 +70,7 @@
               taps = {
                 "homebrew/homebrew-core" = homebrew-core;
                 "homebrew/homebrew-cask" = homebrew-cask;
+                "nubjs/homebrew-tap" = nubjs-tap;
               };
               mutableTaps = true;
             };

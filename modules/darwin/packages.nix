@@ -28,6 +28,7 @@
     starship
     sesh
     tree-sitter
+    just
 
     # Zsh
     oh-my-zsh

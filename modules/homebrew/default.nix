@@ -11,11 +11,17 @@
     taps = [
       "homebrew/cask"
       "homebrew/core"
+      # Homebrew 6.x 对非官方 tap 强制 Tap-Trust
+      {
+        name = "nubjs/tap";
+        trusted = true;
+      }
     ];
 
     brews = [
       "mole"
       "docker"
+      "nub"
     ];
 
     casks = [
@@ -55,7 +61,7 @@
       # Others
       "snipaste"
       "flux-app"
-      "beekeeper-studio"
+      #"beekeeper-studio"
       "mos"
       "mqttx"
 
@@ -65,7 +71,7 @@
 
       # AI Tools
       "codex"
-      #"claude-code"
+      "claude-code"
 
       # screen recorder
       "bettercapture"
