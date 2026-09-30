@@ -21,7 +21,8 @@
     brews = [
       "mole"
       "docker"
-      "nub"
+      # 必须带 tap 前缀：homebrew/core 里也有同名 nub，裸名会被当成 core
+      "nubjs/tap/nub"
       # cairo 是 formula（2D 图形库），不是 cask，不能放 casks 里
       "cairo"
     ];
