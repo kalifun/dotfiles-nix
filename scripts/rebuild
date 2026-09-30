@@ -52,24 +52,33 @@ nixpkgs_mirror_update_url() {
   printf 'git+%s?ref=nixpkgs-unstable&shallow=1' "$(nixpkgs_mirror_host "$1")"
 }
 
-# 构建用：钉死 flake.lock 里的 rev，避免 --mirror 意外升到最新 tip
+# flake.lock 里顶层 nixpkgs 不一定叫 "nixpkgs"（被其它 input 占用时会变成 nixpkgs_2/3）
+nixpkgs_lock_node() {
+  jq -r '.nodes.root.inputs.nixpkgs' flake.lock
+}
+
+# 构建用：钉死 flake.lock 里的 rev，避免 --mirror 意外升到最新 tip。
+# 必须带 shallow=1，否则会几乎全量克隆 nixpkgs（数百万 objects），镜像易 HTTP/2 断连。
 nixpkgs_mirror_locked_url() {
-  local rev
-  rev=$(jq -r '.nodes.nixpkgs.locked.rev' flake.lock)
-  printf 'git+%s?ref=nixpkgs-unstable&rev=%s' "$(nixpkgs_mirror_host "$1")" "$rev"
+  local node rev
+  node="$(nixpkgs_lock_node)"
+  rev=$(jq -r --arg n "$node" '.nodes[$n].locked.rev' flake.lock)
+  printf 'git+%s?ref=nixpkgs-unstable&rev=%s&shallow=1' "$(nixpkgs_mirror_host "$1")" "$rev"
 }
 
 # 把 override 写进的 git 锁节点改回 github:，避免把镜像 URL 提交进 flake.lock
 restore_nixpkgs_github_lock() {
-  local rev nar last_modified
-  rev=$(jq -r '.nodes.nixpkgs.locked.rev' flake.lock)
-  nar=$(jq -r '.nodes.nixpkgs.locked.narHash' flake.lock)
-  last_modified=$(jq -r '.nodes.nixpkgs.locked.lastModified' flake.lock)
+  local node rev nar last_modified
+  node="$(nixpkgs_lock_node)"
+  rev=$(jq -r --arg n "$node" '.nodes[$n].locked.rev' flake.lock)
+  nar=$(jq -r --arg n "$node" '.nodes[$n].locked.narHash' flake.lock)
+  last_modified=$(jq -r --arg n "$node" '.nodes[$n].locked.lastModified' flake.lock)
   jq \
+    --arg node "$node" \
     --arg rev "$rev" \
     --arg nar "$nar" \
     --argjson last_modified "$last_modified" \
-    '.nodes.nixpkgs.locked = {
+    '.nodes[$node].locked = {
        lastModified: $last_modified,
        narHash: $nar,
        owner: "NixOS",
@@ -77,7 +86,7 @@ restore_nixpkgs_github_lock() {
        rev: $rev,
        type: "github"
      }
-     | .nodes.nixpkgs.original = {
+     | .nodes[$node].original = {
        owner: "NixOS",
        ref: "nixpkgs-unstable",
        repo: "nixpkgs",
