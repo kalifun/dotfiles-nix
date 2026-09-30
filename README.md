@@ -212,8 +212,11 @@ In both modes, the first apply uses `nix run` because `darwin-rebuild` is usuall
 You can also use the `rebuild` script from the dotfiles directory:
 
 ```bash
-rebuild           # switch to current config
-rebuild --update  # update all flake inputs, then switch
+rebuild                  # switch to current config
+rebuild --update         # update all flake inputs, then switch
+rebuild --mirror         # 本次构建从南大 git 镜像拉 nixpkgs（不改 flake.lock 来源）
+rebuild --mirror=tuna    # 同上，改用清华镜像
+rebuild --update --mirror  # 经镜像更新 nixpkgs，lock 仍记为 github:
 ```
 
 ## Troubleshooting

@@ -2,8 +2,27 @@
 set -euo pipefail
 
 UPDATE=false
+MIRROR=""
 for arg in "$@"; do
-  [[ "$arg" == "--update" ]] && UPDATE=true
+  case "$arg" in
+    --update) UPDATE=true ;;
+    --mirror) MIRROR="nju" ;;
+    --mirror=*) MIRROR="${arg#--mirror=}" ;;
+    --help|-h)
+      cat <<'EOF'
+Usage: rebuild [--update] [--mirror[=nju|tuna]]
+
+  rebuild                switch to current config
+  rebuild --update       update all flake inputs, then switch
+  rebuild --mirror       fetch locked nixpkgs via NJU git mirror
+  rebuild --mirror=tuna  same, but Tsinghua mirror
+  rebuild --update --mirror
+                         update nixpkgs via mirror (lock stays github:),
+                         update other inputs normally, then switch
+EOF
+      exit 0
+      ;;
+  esac
 done
 
 case $(uname -m) in
@@ -12,10 +31,89 @@ case $(uname -m) in
   *) echo "Unsupported architecture: $(uname -m)"; exit 1 ;;
 esac
 
+if [[ ! -f ./flake.nix || ! -f ./flake.lock ]]; then
+  echo "Run rebuild from the dotfiles-nix repo (need ./flake.nix and ./flake.lock)" >&2
+  exit 1
+fi
+
+nixpkgs_mirror_host() {
+  case "$1" in
+    nju|nj) printf '%s' "https://mirrors.nju.edu.cn/git/nixpkgs.git" ;;
+    tuna|thu|tsinghua) printf '%s' "https://mirrors.tuna.tsinghua.edu.cn/git/nixpkgs.git" ;;
+    *)
+      echo "Unknown mirror '$1' (use nju or tuna)" >&2
+      exit 1
+      ;;
+  esac
+}
+
+# 更新用：跟 tip，shallow 加速
+nixpkgs_mirror_update_url() {
+  printf 'git+%s?ref=nixpkgs-unstable&shallow=1' "$(nixpkgs_mirror_host "$1")"
+}
+
+# 构建用：钉死 flake.lock 里的 rev，避免 --mirror 意外升到最新 tip
+nixpkgs_mirror_locked_url() {
+  local rev
+  rev=$(jq -r '.nodes.nixpkgs.locked.rev' flake.lock)
+  printf 'git+%s?ref=nixpkgs-unstable&rev=%s' "$(nixpkgs_mirror_host "$1")" "$rev"
+}
+
+# 把 override 写进的 git 锁节点改回 github:，避免把镜像 URL 提交进 flake.lock
+restore_nixpkgs_github_lock() {
+  local rev nar last_modified
+  rev=$(jq -r '.nodes.nixpkgs.locked.rev' flake.lock)
+  nar=$(jq -r '.nodes.nixpkgs.locked.narHash' flake.lock)
+  last_modified=$(jq -r '.nodes.nixpkgs.locked.lastModified' flake.lock)
+  jq \
+    --arg rev "$rev" \
+    --arg nar "$nar" \
+    --argjson last_modified "$last_modified" \
+    '.nodes.nixpkgs.locked = {
+       lastModified: $last_modified,
+       narHash: $nar,
+       owner: "NixOS",
+       repo: "nixpkgs",
+       rev: $rev,
+       type: "github"
+     }
+     | .nodes.nixpkgs.original = {
+       owner: "NixOS",
+       ref: "nixpkgs-unstable",
+       repo: "nixpkgs",
+       type: "github"
+     }' flake.lock > flake.lock.tmp
+  mv flake.lock.tmp flake.lock
+}
+
+OVERRIDE_ARGS=()
+if [[ -n "$MIRROR" ]]; then
+  if $UPDATE; then
+    MIRROR_URL="$(nixpkgs_mirror_update_url "$MIRROR")"
+  else
+    MIRROR_URL="$(nixpkgs_mirror_locked_url "$MIRROR")"
+  fi
+  echo "Using nixpkgs mirror ($MIRROR): $MIRROR_URL"
+  OVERRIDE_ARGS+=(--override-input nixpkgs "$MIRROR_URL")
+fi
+
 if $UPDATE; then
-  echo "Updating flake inputs..."
-  nix flake update
+  if [[ -n "$MIRROR" ]]; then
+    echo "Updating nixpkgs via mirror..."
+    nix flake update nixpkgs "${OVERRIDE_ARGS[@]}"
+    restore_nixpkgs_github_lock
+    # 构建阶段改用刚锁上的 rev
+    OVERRIDE_ARGS=(--override-input nixpkgs "$(nixpkgs_mirror_locked_url "$MIRROR")")
+    echo "Updating remaining flake inputs..."
+    nix flake update \
+      darwin home-manager nix-homebrew \
+      homebrew-core homebrew-cask \
+      devshells nubjs-tap
+  else
+    echo "Updating flake inputs..."
+    nix flake update
+  fi
 fi
 
 echo "Building $TARGET..."
-sudo darwin-rebuild switch --flake .#"$TARGET"
+sudo darwin-rebuild switch --flake .#"$TARGET" "${OVERRIDE_ARGS[@]}"
