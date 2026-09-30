@@ -4,22 +4,18 @@
   ...
 }: {
   # Set to true when Nix is installed by the official installer, false when using Determinate Nix.
+  # Determinate 管理 /etc/nix/nix.conf；自定义项写到 nix.custom.conf（见下方 environment.etc）。
   nix.enable = false;
   system.primaryUser = username;
 
-  nix.settings = {
-    experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
-    trusted-users = [ username ];
-    auto-optimise-store = true;
-    # SJTUG 镜像优先，官方 cache 作后备（见 https://mirror.sjtu.edu.cn/docs/nix-channels/store ）
-    substituters = [
-      "https://mirror.sjtu.edu.cn/nix-channels/store"
-      "https://cache.nixos.org"
-    ];
-  };
+  # Determinate Nix：国内 binary cache 优先（priority 越小越优先；官方源默认 40）
+  # https://mirror.sjtu.edu.cn/docs/nix-channels/store
+  # https://mirrors.ustc.edu.cn/help/nix-channels.html
+  environment.etc."nix/nix.custom.conf".text = ''
+    extra-substituters = https://mirror.sjtu.edu.cn/nix-channels/store?priority=10 https://mirrors.ustc.edu.cn/nix-channels/store?priority=20
+    trusted-users = ${username}
+    auto-optimise-store = true
+  '';
 
   nixpkgs.config.allowUnfree = true;
 

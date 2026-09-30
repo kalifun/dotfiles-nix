@@ -1,6 +1,14 @@
 {
   description = "macOS Nix setup with nix-darwin, home-manager, and Homebrew";
 
+  # flake 构建时也走国内 cache（需接受 flake 的 nixConfig 提示，或已在 nix.custom.conf 配好）
+  nixConfig = {
+    extra-substituters = [
+      "https://mirror.sjtu.edu.cn/nix-channels/store?priority=10"
+      "https://mirrors.ustc.edu.cn/nix-channels/store?priority=20"
+    ];
+  };
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
