@@ -25,6 +25,7 @@
       "nubjs/tap/nub"
       # cairo 是 formula（2D 图形库），不是 cask，不能放 casks 里
       "cairo"
+      "openssl@3"
     ];
 
     casks = [
