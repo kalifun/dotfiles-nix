@@ -23,6 +23,9 @@
     };
 
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    # homebrew-cask 的 `zap :not_required` 从 Homebrew 7.0.11 起才能解析。
+    # nix-homebrew 自己仍钉着更旧的 brew。用 git+https，避免解析 tag 时打到 GitHub API 限流。
+    nix-homebrew.inputs.brew-src.url = "git+https://github.com/Homebrew/brew?ref=7.0.11&rev=c6069d2a943b71b0a90d91fc1ac93cb9c1634dcc";
 
     homebrew-core = {
       url = "github:Homebrew/homebrew-core";

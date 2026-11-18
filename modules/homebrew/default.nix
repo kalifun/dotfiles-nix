@@ -36,7 +36,7 @@
       "squirrel-app"
 
       # Browser
-      "arc"
+      # "arc"
       "google-chrome"
 
       # IDE
@@ -72,6 +72,7 @@
       # Fonts
       "font-fira-code"
       "font-monaspace"
+      "font-iosevka"
 
       # AI Tools
       "codex"

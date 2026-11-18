@@ -3,18 +3,19 @@
     "brew-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1788591592,
-        "narHash": "sha256-NbwVKwKLFl0oXub7oPjvmDaOygCtV2oboeKTu4xXFTk=",
-        "owner": "Homebrew",
-        "repo": "brew",
-        "rev": "08e85c4e42f5d8f1ea17c36cb59cf61c2ccb26c3",
-        "type": "github"
+        "lastModified": 1793000687,
+        "narHash": "sha256-8mCor0DDjNhi+0e+FllfqiMABujBl+/RxYW+wgMpcto=",
+        "ref": "7.0.11",
+        "rev": "c6069d2a943b71b0a90d91fc1ac93cb9c1634dcc",
+        "revCount": 53347,
+        "type": "git",
+        "url": "https://github.com/Homebrew/brew"
       },
       "original": {
-        "owner": "Homebrew",
-        "ref": "6.0.22",
-        "repo": "brew",
-        "type": "github"
+        "ref": "7.0.11",
+        "rev": "c6069d2a943b71b0a90d91fc1ac93cb9c1634dcc",
+        "type": "git",
+        "url": "https://github.com/Homebrew/brew"
       }
     },
     "darwin": {
@@ -24,11 +25,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786845137,
-        "narHash": "sha256-oQFip+v0luP8NIxJzmiW4Wu8bILsbFWom5l0zonl8hQ=",
+        "lastModified": 1792737899,
+        "narHash": "sha256-P0/GhewcEQmAbzq3QunNWY2jLJaYH9F6c/5dEM/jQ4M=",
         "owner": "LnL7",
         "repo": "nix-darwin",
-        "rev": "4cff07de74b50e64bdd68cd4e722ab5b6b35ee48",
+        "rev": "bb0b90dbd54e207100de72b5dcbe3188c98a4b69",
         "type": "github"
       },
       "original": {
@@ -123,11 +124,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789339793,
-        "narHash": "sha256-1TGxgma8jQGhw0yfjyndwPhgcoXAYtlSm4ezENVzrPA=",
+        "lastModified": 1793124281,
+        "narHash": "sha256-KdGTOgYXgMDA/ymTV10yLMt9tOjz9EmTgnTvaD+bhe4=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "dd0b74e2b53eb6aa03fe120fcc00a4d37cc288f8",
+        "rev": "1e3ebeb683d055d1675d3f64e6d2b186cb2ee504",
         "type": "github"
       },
       "original": {
@@ -139,11 +140,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1789346392,
-        "narHash": "sha256-xjOWZaC17HWuI7igzFwT3YwEV0aGn9xQd+FPNRV7bY8=",
+        "lastModified": 1793162489,
+        "narHash": "sha256-fsihpLNg4yveWWSlOLIH2TOmdxSkokCVmSfL9E9caJw=",
         "owner": "Homebrew",
         "repo": "homebrew-cask",
-        "rev": "2914fafaa55dde192cb589c50901b611d7ff9e13",
+        "rev": "59e90fe552348ef3dedc16579cc17724ae4d4cda",
         "type": "github"
       },
       "original": {
@@ -155,11 +156,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1789347183,
-        "narHash": "sha256-dnJYWIZgtPsfuXYkUg/LIx75NODmjMFyIqPHafM8ybg=",
+        "lastModified": 1793164348,
+        "narHash": "sha256-hgALVA7I+glvdJAmC1fhi5dbGAYZz4T84SrgY9SKWv4=",
         "owner": "Homebrew",
         "repo": "homebrew-core",
-        "rev": "e49799b6e18b60446a7750006756bd0e361333e4",
+        "rev": "21be5f289b83af0efa40c20a9a08781971ff907c",
         "type": "github"
       },
       "original": {
@@ -267,11 +268,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1790600678,
-        "narHash": "sha256-6k3n7X2UsZ6tAlWTz99RimiZab+17tMUrw9sRUcELiA=",
+        "lastModified": 1792842277,
+        "narHash": "sha256-pGPnZGi8y9d76xNeracniXO3dsYVROEmMkMc8jD0Ihc=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "f45c6f04c2f013f004bf94e284e95d72898d9393",
+        "rev": "d3b13ad75cc492690728f9307e443dec9ef9a20e",
         "type": "github"
       },
       "original": {
@@ -284,11 +285,11 @@
     "nubjs-tap": {
       "flake": false,
       "locked": {
-        "lastModified": 1790377222,
-        "narHash": "sha256-fVP5IgAgCDlAR+NZeF+oBjw16fOf/tlsJd8ogZfnqKM=",
+        "lastModified": 1792449426,
+        "narHash": "sha256-mut+kef6JAaqfG+oVlSFfP2MxUvXsyOu4ILVbT85aeo=",
         "ref": "refs/heads/main",
-        "rev": "b4f6327982c79c97c26b675a8b4b4fb99e52c0b1",
-        "revCount": 50,
+        "rev": "29d0e45fcafad69a2fa1e2e0e31a1aa652a15989",
+        "revCount": 52,
         "type": "git",
         "url": "https://github.com/nubjs/homebrew-tap"
       },
